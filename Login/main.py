@@ -2,7 +2,6 @@
 # https://www.youtube.com/@MagnoEfren/videos
 
 import flet as ft 
-
 body =  ft.Container(
             ft.Row([
                 ft.Container(
