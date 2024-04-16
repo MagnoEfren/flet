@@ -4,18 +4,18 @@
 Entre estas y muchas mas aplicaciones realizas con Flet en Python  encontraras en Youtube
 
 <a href="https://www.youtube.com/c/MagnoEfren" target="_blank">
-<img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" target="_blank"> 
+<img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" target="_blank">
+</a>
 
-Form, CRUD, export data in Excel and PDF
-
+#### Form, CRUD, export data in Excel and PDF
 <a href='https://youtu.be/AAxijGx9_Pc' target='_blank'>
-  <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Form_CRUD/ss.webp' alt='CRUD en PYTHON con FLET' />
+  <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Form_CRUD/ss.webp' alt='CRUD in PYTHON with FLET' />
 </a>
 
 #### Login (Inicio de sesión) 
 
-<a href='https://youtu.be/AAxijGx9_Pc' target='_blank'>
-  <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Login/Screenshot.png' alt='Efecto Matrix con Python' />
+<a href='https://youtu.be/haD3Y29mjrA?si=wZxTx4B7p83PTa1k' target='_blank'>
+  <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Login/Screenshot.png' alt='Login in Flet' />
 </a>
 </div>
 
