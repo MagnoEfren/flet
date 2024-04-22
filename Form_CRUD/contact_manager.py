@@ -1,7 +1,6 @@
 # Aplicacion de CRUD con Flet y SQLite
 # @autor: Magno Efren
 # Youtube: https://www.youtube.com/c/MagnoEfren
-
 import sqlite3
 
 class ContactManager:
