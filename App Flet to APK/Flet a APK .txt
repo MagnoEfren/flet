@@ -1,0 +1,34 @@
+
+Instalar SDK Tools sin Android Studio 
+
+SDK Tools en  Command line tools only  (Windows en mi caso ) : https://developer.android.com/studio
+-  Referencia:  https://youtu.be/XCj8Aoe--R4?si=jcfFWrM8OKVQ69M6
+
+Variables de entorno:
+C:\Android\SDK\cmdline-tools\tools\bin
+C:\Android\SDK\emulator
+C:\Android\SDK\platform-tools
+
+Comandos (en orden):
+sdkmanager --list
+sdkmanager "build-tools;30.0.3"
+sdkmanager "platforms;android-30"
+sdkmanager "sources;android-30"
+sdkmanager "system-images;android-30;default;x86_64"
+
+
+Tener instalado Flutter (Flutter SDK 3.16  o mayor) :
+https://docs.flutter.dev/get-started/install/windows/desktop?tab=download
+
+Tener instalado Java en este caso JDK 18: 
+https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html
+
+Verificar que la version de java  con cuerde con Support for running Gradle de acuerdo al siguiente cuadro: 
+
+https://docs.gradle.org/current/userguide/compatibility.html#java
+
+->  Flet create  <nombre_de_la_app>
+-> En assets agregar el icon.png
+-> Crear la app:  flet build apk 
+-> Se crea el archivo .apk  en la carpeta build 
+
