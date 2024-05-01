@@ -12,12 +12,13 @@ Entre estas y muchas mas aplicaciones realizas con Flet en Python  encontraras e
   <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Form_CRUD/ss.webp' alt='CRUD in PYTHON with FLET' />
 </a>
 
-#### Login (Inicio de sesión) 
-
-<a href='https://youtu.be/haD3Y29mjrA?si=wZxTx4B7p83PTa1k' target='_blank'>
-  <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Login/Screenshot.png' alt='Login in Flet' />
-</a>
+#### Convertir a apk 
 </div>
+
+# Tener instalado flutter : 
+
+
+
 
 #### Si desea apoyar puede hacerlo aquí:
 #### Nunca es obligatorio, pero se agradece mucho. 😊
