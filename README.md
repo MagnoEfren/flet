@@ -12,13 +12,28 @@ Entre estas y muchas mas aplicaciones realizas con Flet en Python  encontraras e
   <img width='60%' src='https://github.com/MagnoEfren/apps_in_flet/blob/main/Form_CRUD/ss.webp' alt='CRUD in PYTHON with FLET' />
 </a>
 
-#### Convertir a apk 
 </div>
 
-# Tener instalado flutter : 
+## Publish an app on Flet to Android
+### -Commands
+```flet create <myapp>```
+Creates a folder when the name <name> is specified and contains the assets folder and main files.
 
+```flet build apk```
+Create a build folder where the app .apk is located there
 
+### -Steps
+- Install the android SDK
+- Install the Flutter SDK 3.16 or above 
+- Install the Java JDK
+- Verify that the java version matches Support for running Gradle according to the following table [Compatibility](https://docs.gradle.org/current/userguide/compatibility.html#java):
 
+  
+### -Example
+#### Watch the video on YouTube here 👇📱
+<a href='https://youtu.be/rnot_xtKTLI' target='_blank'>
+  <img width='50%' src='https://github.com/MagnoEfren/flet/blob/main/App%20Flet%20to%20APK/fletcal/assets/flet-to-apk.png' alt='Convertir una Aplicación en Python con Flet a  Android' />
+</a>
 
 #### Si desea apoyar puede hacerlo aquí:
 #### Nunca es obligatorio, pero se agradece mucho. 😊
