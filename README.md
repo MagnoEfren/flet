@@ -43,8 +43,8 @@ Create a build folder where the app .apk is located there
 
 <div align="right">
   
-### Si desea apoyar puede hacerlo aquí:
-### Nunca es obligatorio, pero se agradece mucho. 😊
+#### ___Si desea apoyar puede hacerlo aquí:___
+#### ___Nunca es obligatorio, pero se agradece mucho.___ 😊
 <a href="https://www.paypal.com/paypalme/magnoefren" target="_blank">
 <img src="https://img.shields.io/badge/Paypal-151515?style=for-the-badge&logo=paypal&logoColor=black" target="_blank">
  
