@@ -40,7 +40,6 @@ Create a build folder where the app .apk is located there
   <img width='50%' src='https://github.com/MagnoEfren/flet/blob/main/App%20Flet%20to%20APK/fletcal/assets/flet-to-apk.png' alt='Convertir una Aplicación en Python con Flet a  Android' />
 </a>
 
-
 <div align="right">
   
 #### ___Si desea apoyar puede hacerlo aquí:___
