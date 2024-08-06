@@ -1,13 +1,11 @@
 
 <div align="center">
-  
 ### Interfaces Graficas en Python con Flet  
 Entre estas y muchas mas aplicaciones realizas con Flet en Python  encontraras en Youtube
 
 <a href="https://www.youtube.com/c/MagnoEfren" target="_blank">
 <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" target="_blank">
 </a>
-
 </div>
 
 ### Form, CRUD, export data in Excel and PDF
