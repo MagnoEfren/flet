@@ -36,8 +36,6 @@ class CameraApp(ft.Container):
                 ft.OutlinedButton("NO", on_click= self.no_click)
             ]
         )
-
-
         self.cameras = ft.Column(
             expand=True,
             controls=[
@@ -70,7 +68,6 @@ class CameraApp(ft.Container):
             ]
         )
 
-
         self.page.add(ft.Row(
             expand=True,
             controls=[
@@ -101,7 +98,6 @@ class CameraApp(ft.Container):
             self.page.overlay.append(self.confirm_dialog)
             self.confirm_dialog.open = True
             self.page.update()
-    
 
     def yes_click(self, e):
         self.thread_running = False
