@@ -27,7 +27,7 @@ Entre estas y muchas mas aplicaciones realizas con Flet en Python  encontraras e
 - Fácil de personalizar y adaptarse a tu estilo.
 
 <a href='https://youtu.be/AAxijGx9_Pc' target='_blank'>
-  <img width='50%' src='[https://github.com/MagnoEfren/apps_in_flet/blob/main/Form_CRUD/ss.webp](https://yt3.ggpht.com/JtABcPa3AuDQKbu0Uzf7Tg_akshjeQFmNor4gMj7x9Nzl1TEUcR6qZ-kmrpTi-AlXP205LxISyBMGsU=s1600-nd-v1-rwa)' alt='Portafolio Web Responsive con Flet' />
+  <img width='50%' src='https://github.com/MagnoEfren/flet/blob/main/PortfolioWeb/222.png' alt='Portafolio Web Responsive con Flet' />
 </a>
 
 
