@@ -2,7 +2,6 @@
 #   ¡Únete como miembro del Nivel 💎💎💎!
 #   Accede al código completo de todos los videos, que no estan en github. 
 
-
 import flet as ft 
 
 class ProductPage(ft.View):
