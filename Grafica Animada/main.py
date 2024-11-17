@@ -1,3 +1,5 @@
+# Magno Efren 
+# https://www.youtube.com/@MagnoEfren/videos
 
 import flet as ft 
 import random 
