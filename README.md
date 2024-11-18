@@ -62,5 +62,8 @@ Create a build folder where the app .apk is located there
  
 <a href="https://www.youtube.com/channel/UCBwN7Z5LWQAJ_6ueSEzDtGQ/join" target="_blank">
 <img src="https://img.shields.io/badge/UNIRSE-0011aa?style=for-the-badge&logo=UNIRSE&logoColor=black" target="_blank">
+
+<a href="https://www.patreon.com/magnoefren" target="_blank">
+<img src="https://img.shields.io/badge/patreon-000000?style=for-the-badge&logo=patreon&logoColor=white" target="_blank">
   
 </div>
