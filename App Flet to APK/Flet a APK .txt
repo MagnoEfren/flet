@@ -1,4 +1,3 @@
-
 Instalar SDK Tools sin Android Studio 
 
 SDK Tools en  Command line tools only  (Windows en mi caso ) : https://developer.android.com/studio
