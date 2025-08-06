@@ -1,3 +1,4 @@
+
 Instalar SDK Tools sin Android Studio 
 SDK Tools en  Command line tools only  (Windows en mi caso ) : https://developer.android.com/studio
 -  Referencia:  https://youtu.be/XCj8Aoe--R4?si=jcfFWrM8OKVQ69M6
@@ -29,5 +30,6 @@ https://docs.gradle.org/current/userguide/compatibility.html#java
 -> En assets agregar el icon.png
 -> Crear la app:  flet build apk 
 -> Se crea el archivo .apk  en la carpeta build 
+
 
 
