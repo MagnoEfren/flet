@@ -1,5 +1,3 @@
-
-
 import flet as ft 
 def main(page:ft.Page):
     page.window_height=460
@@ -165,3 +163,4 @@ def main(page:ft.Page):
      )
 
 ft.app(target=main)
+
