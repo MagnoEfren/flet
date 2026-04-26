@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>🏆 CARRERA 17 PAÍSES</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+/* ── FONDO ── */
+.bg{
+  position:fixed;inset:0;z-index:-2;
+  background:url("https://i.pinimg.com/originals/84/7b/10/847b107ffd33367e0d943d4f4c5fc0ef.gif") center/cover;
+}
+.overlay{
+  position:fixed;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(0,0,0,0.82) 0%,rgba(3,7,20,0.93) 100%);
+}
+
+/* ── CONTENEDOR 9:16 HD ── */
+.container{
+  width:405px;        /* 1080 × 0.375 = 405 → escala proporcional 9:16 */
+  height:720px;       /* 1920 × 0.375 = 720 */
+  padding:6px 8px 6px 54px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  overflow:visible;   /* permite ver los regalos que salen a la izquierda */
+}
+
+/* ── PODIO ── */
+.podium-section{
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;
+  padding:4px 8px;
+  flex-shrink:0;
+}
+.podium-label{
+  font-family:'Orbitron',sans-serif;font-size:7px;
+  color:#475569;letter-spacing:2px;margin-bottom:3px;
+}
+.podium-row{display:flex;gap:4px;}
+.podium-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:rgba(255,255,255,0.03);
+  border-radius:6px;padding:3px 2px;
+  border:1px solid rgba(255,255,255,0.06);
+  transition:border-color 0.3s;
+}
+.podium-item.p1{border-color:rgba(255,215,0,0.55);background:rgba(255,215,0,0.08);}
+.podium-item.p2{border-color:rgba(192,192,192,0.35);background:rgba(192,192,192,0.04);}
+.podium-item.p3{border-color:rgba(205,127,50,0.35);background:rgba(205,127,50,0.04);}
+.podium-top{display:flex;align-items:center;gap:3px;}
+.medal{font-size:11px;line-height:1;}
+.podium-flag{width:22px;height:15px;border-radius:2px;object-fit:cover;}
+.podium-pct{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;color:#38bdf8;}
+.podium-item.p1 .podium-pct{color:#FFD700;}
+.podium-item.p2 .podium-pct{color:#cbd5e1;}
+.podium-item.p3 .podium-pct{color:#cd7f32;}
+
+/* ── PISTAS ── */
+.tracks{
+  display:flex;flex-direction:column;
+  gap:2px;
+  flex:1;
+  overflow:visible;   /* permite ver los regalos laterales */
+}
+
+.lane-row{
+  position:relative;
+  display:flex;
+  align-items:center;
+  flex:1;
+}
+
+/* regalo a la izquierda fuera del carril */
+.gift-side{
+  position:absolute;
+  left:-47px;
+  width:40px;height:40px;
+  object-fit:contain;
+  z-index:10;
+  filter:drop-shadow(0 1px 4px rgba(0,0,0,0.9));
+  animation:giftIdle 2.8s ease-in-out infinite;
+}
+@keyframes giftIdle{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-3px) scale(1.07);}
+}
+
+/* CARRIL — overflow visible para que el gift-side no se corte */
+.lane{
+  position:relative;
+  flex:1;
+  height:100%;
+  border-radius:5px;
+  background:rgba(8,15,35,0.8);
+  border:1px solid rgba(255,255,255,0.07);
+  overflow:visible; /* regalo lateral visible */
+}
+
+/* Recorte interno para que el contenido del carril no desborde */
+.lane-inner-clip{
+  position:absolute;inset:0;
+  border-radius:5px;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Nombre del país scrolling de derecha a izquierda — al fondo, atenuado */
+.country-label{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  color:rgba(255,255,255,0.18);
+  white-space:nowrap;
+  z-index:1;
+  pointer-events:none;
+  /* animación: empieza en right:0 y va hasta left fuera de pantalla */
+  animation:labelScroll var(--scroll-dur, 12s) linear infinite;
+}
+@keyframes labelScroll{
+  0%  { left: 110%; }
+  100%{ left: -40%; }
+}
+
+/* Líneas suelo animadas */
+.lane-track{
+  position:absolute;
+  bottom:0;left:0;right:0;height:4px;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent 0px,transparent 16px,
+    rgba(255,255,255,0.2) 16px,rgba(255,255,255,0.2) 26px
+  );
+  background-size:36px 100%;
+  animation:trackMove 1s linear infinite;
+  animation-play-state:running;
+}
+@keyframes trackMove{
+  from{background-position:0 0;}
+  to{background-position:-36px 0;}
+}
+
+/* Meta */
+.finish-line{
+  position:absolute;right:0;top:0;
+  width:7px;height:100%;
+  background:repeating-linear-gradient(
+    180deg,#fff 0px,#fff 4px,#000 4px,#000 8px
+  );
+  opacity:0.9;z-index:2;
+}
+
+/* Bandera */
+.lane-flag{
+  position:absolute;left:3px;top:50%;transform:translateY(-50%);
+  width:22px;height:15px;
+  border-radius:2px;object-fit:cover;
+  box-shadow:0 1px 4px rgba(0,0,0,0.9);
+  z-index:3;
+}
+
+/* Contador de vueltas */
+.lap-counter{
+  position:absolute;left:28px;top:50%;transform:translateY(-50%);
+  font-family:'Orbitron',sans-serif;
+  font-size:7px;font-weight:700;
+  color:rgba(255,215,0,0.9);
+  z-index:3;
+  display:none; /* se muestra cuando hay ≥1 vuelta */
+  text-shadow:0 0 6px rgba(255,215,0,0.8);
+  white-space:nowrap;
+}
+
+/* Barra progreso */
+.progress-bar{
+  position:absolute;bottom:0;left:0;height:2px;
+  background:linear-gradient(90deg,#38bdf8,#818cf8);
+  z-index:2;
+  transition:width 0.08s linear;
+}
+
+/* Caballo */
+.horse{
+  position:absolute;
+  bottom:3px;
+  height:20px;
+  transform:scaleX(-1);
+  z-index:4;
+  left:28px;
+}
+
+/* Glow comentario → amarillo, aparece y se desvanece en 1s */
+@keyframes glowComment{
+  0%  {filter:drop-shadow(0 0 3px rgba(255,230,0,0.3));}
+  25% {filter:drop-shadow(0 0 8px rgba(255,230,0,1)) drop-shadow(0 0 18px rgba(255,200,0,0.9)) drop-shadow(0 0 28px rgba(255,180,0,0.6));}
+  100%{filter:none;}
+}
+.horse.boost-comment{
+  animation:glowComment 1s ease-out forwards;
+}
+/* Glow donación → rojo muy intenso, dura 1.4s */
+@keyframes glowGift{
+  0%  {filter:drop-shadow(0 0 5px rgba(255,50,0,0.5));}
+  20% {filter:drop-shadow(0 0 10px rgba(255,50,0,1)) drop-shadow(0 0 22px rgba(255,0,0,1)) drop-shadow(0 0 40px rgba(255,80,0,0.9)) drop-shadow(0 0 65px rgba(255,30,0,0.6));}
+  100%{filter:none;}
+}
+.horse.boost-gift{
+  animation:glowGift 1.4s ease-out forwards;
+}
+/* Sacudida al chocar obstáculo */
+@keyframes horseKnock{
+  0%  {transform:scaleX(-1) translateX(0);}
+  20% {transform:scaleX(-1) translateX(9px);}
+  50% {transform:scaleX(-1) translateX(-5px);}
+  75% {transform:scaleX(-1) translateX(3px);}
+  100%{transform:scaleX(-1) translateX(0);}
+}
+.horse.knocked{
+  animation:horseKnock 0.4s ease-out forwards;
+}
+
+/* ── REGALO FLOTANTE: va de izquierda a derecha y se desvanece ── */
+@keyframes giftFly{
+  0%  {opacity:1; transform:translateX(0)   scale(1.1);}
+  60% {opacity:0.8;transform:translateX(40px) scale(0.9);}
+  100%{opacity:0; transform:translateX(80px) scale(0.6);}
+}
+
+/* ── OBSTÁCULO ── */
+.obstacle{
+  position:absolute;bottom:5px;
+  width:0;height:0;
+  border-left:8px solid transparent;
+  border-right:8px solid transparent;
+  border-bottom:16px solid #ef4444;
+  z-index:5;
+  filter:drop-shadow(0 0 5px rgba(239,68,68,1));
+}
+
+/* ── INFO PÚBLICA ── */
+.info-section{
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px;
+  padding:5px 8px;
+  flex-shrink:0;
+}
+.info-title{
+  font-family:'Orbitron',sans-serif;font-size:7px;
+  color:#38bdf8;letter-spacing:2px;margin-bottom:4px;
+}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.info-item{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.03);border-radius:5px;
+  padding:4px 6px;border:1px solid rgba(255,255,255,0.05);
+}
+.info-icon{font-size:13px;flex-shrink:0;}
+.info-text{font-size:9px;color:#94a3b8;line-height:1.3;font-weight:600;}
+.info-text strong{color:#e2e8f0;display:block;font-size:10px;}
+
+/* ── GANADOR OVERLAY ── */
+.winner-overlay{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(0,0,0,0.88);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;text-align:center;
+}
+.winner-overlay.show{display:flex;}
+.winner-title{
+  font-family:'Bebas Neue',sans-serif;font-size:38px;
+  color:#FFD700;letter-spacing:4px;
+  animation:pulse 0.8s infinite alternate;
+}
+@keyframes pulse{
+  from{text-shadow:0 0 20px rgba(255,215,0,0.8);}
+  to{text-shadow:0 0 60px rgba(255,215,0,1),0 0 100px rgba(255,180,0,0.5);}
+}
+.winner-flag-big{
+  width:90px;height:60px;border-radius:6px;object-fit:cover;
+  border:3px solid #FFD700;box-shadow:0 0 30px rgba(255,215,0,0.6);
+}
+.winner-name{font-family:'Orbitron',sans-serif;font-size:16px;color:#fff;letter-spacing:3px;}
+.winner-laps{font-family:'Rajdhani',sans-serif;font-size:13px;color:#FFD700;}
+.winner-btn{
+  padding:9px 22px;background:#FFD700;color:#000;
+  border:none;border-radius:7px;font-family:'Rajdhani',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;
+}
+.winner-btn:hover{background:#ffe84d;}
+
+/* ── NOTIF (solo donaciones) ── */
+.notif{
+  position:fixed;top:8px;left:50%;
+  transform:translateX(-50%) translateY(-70px);
+  background:#0f172a;
+  border:2px solid #ef4444;
+  border-radius:7px;padding:5px 14px;
+  color:#fca5a5;
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:1px;transition:transform 0.3s ease;z-index:50;
+  white-space:nowrap;
+  box-shadow:0 4px 20px rgba(239,68,68,0.5);
+}
+.notif.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<!-- GANADOR -->
+<div class="winner-overlay" id="winnerOverlay">
+  <div style="font-family:'Orbitron',sans-serif;font-size:9px;color:#475569;letter-spacing:3px;">LÍDER</div>
+  <div class="winner-title">🏆 VA EN PRIMER LUGAR</div>
+  <img class="winner-flag-big" id="winnerFlag" src="" alt="">
+  <div class="winner-name" id="winnerName"></div>
+  <div class="winner-laps" id="winnerLaps"></div>
+  <button class="winner-btn" onclick="dismissWinner()">▶ CONTINUAR</button>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<div class="container">
+
+  <!-- CLASIFICACIÓN -->
+  <div class="podium-section">
+    <div class="podium-label">🏆 CLASIFICACIÓN EN VIVO</div>
+    <div class="podium-row" id="podium"></div>
+  </div>
+
+  <!-- PISTAS -->
+  <div class="tracks" id="track"></div>
+
+  <!-- INFO PÚBLICA -->
+  <div class="info-section">
+    <div class="info-title">⚡ CÓMO PARTICIPAR</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-icon">💬</span>
+        <div class="info-text"><strong>Comenta tu país</strong>El caballo avanza</div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🎁</span>
+        <div class="info-text"><strong>Dona el regalo</strong>¡TURBO x10!</div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">❤️</span>
+        <div class="info-text"><strong>5 tap tap</strong>Obstáculo aleatorio</div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">💬</span>
+        <div class="info-text"><strong>Comenta "obstáculo + país"</strong>¡Lo frena!</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  ⚙️  CONFIGURACIÓN
+// ════════════════════════════════════════════════════════
+
+const WIN_POS          = 290;   // largo de la pista en px antes de nueva vuelta
+const BASE_SPD         = 0.012; // velocidad base sin boost (~50-70 min solos)
+const RANDOM_SPD       = 0.005; // variación aleatoria
+const TICK_MS          = 80;    // intervalo del loop (ms)
+const BOOST_COMMENT    = 0.25;  // boost por comentario
+const BOOST_GIFT       = 2.5;   // boost por donación (x10 más que comentario)
+const BOOST_OBS_SPAWN  = -0.5;  // penalización al aparecer obstáculo
+const BOOST_OBS_HIT    = -0.5;  // penalización al golpear obstáculo
+const LIKES_FOR_OBS    = 5;     // likes para obstáculo aleatorio
+const BOOST_DECAY      = 0.92;  // decaimiento del boost por tick
+const MIN_SPD          = 0.003; // velocidad mínima garantizada
+const GLOW_COMMENT_MS  = 700;   // duración glow amarillo (ms)
+const GLOW_GIFT_MS     = 1400;  // duración glow rojo (ms)
+
+// ════════════════════════════════════════════════════════
+//  🌍  17 PAÍSES
+// ════════════════════════════════════════════════════════
+const COUNTRIES = [
+  { name:"Perú",        code:"pe", tecla:"a", gift:"1_1.webp",  keys:["peru","perú"] },
+  { name:"México",      code:"mx", tecla:"s", gift:"1_2.webp",  keys:["mexico","méx","mx"] },
+  { name:"Bolivia",     code:"bo", tecla:"d", gift:"1_3.webp",  keys:["bolivia"] },
+  { name:"Guatemala",   code:"gt", tecla:"f", gift:"1_4.webp",  keys:["guatemala"] },
+  { name:"Ecuador",     code:"ec", tecla:"g", gift:"1_5.webp",  keys:["ecuador"] },
+  { name:"Argentina",   code:"ar", tecla:"h", gift:"1_6.webp",  keys:["argentina","arg"] },
+  { name:"Colombia",    code:"co", tecla:"j", gift:"1_7.webp",  keys:["colombia","col"] },
+  { name:"España",      code:"es", tecla:"k", gift:"1_8.webp",  keys:["españa","espana"] },
+  { name:"El Salvador", code:"sv", tecla:"u", gift:"1_9.webp",  keys:["el salvador","salvador"] },
+  { name:"Chile",       code:"cl", tecla:"z", gift:"1_10.webp", keys:["chile"] },
+  { name:"Venezuela",   code:"ve", tecla:"x", gift:"1_11.webp", keys:["venezuela","vzla"] },
+  { name:"Costa Rica",  code:"cr", tecla:"c", gift:"1_12.webp", keys:["costa rica"] },
+  { name:"Nicaragua",   code:"ni", tecla:"v", gift:"1_13.webp", keys:["nicaragua","nica"] },
+  { name:"Paraguay",    code:"py", tecla:"b", gift:"1_14.webp", keys:["paraguay"] },
+  { name:"Honduras",    code:"hn", tecla:"n", gift:"1_15.webp", keys:["honduras"] },
+  { name:"Brasil",      code:"br", tecla:"m", gift:"1_16.webp", keys:["brasil","brazil"] },
+  { name:"Uruguay",     code:"uy", tecla:"q", gift:"1_17.webp", keys:["uruguay"] },
+];
+
+const GIFT_BASE = "https://raw.githubusercontent.com/MagnoEfren/streamlit/refs/heads/main/regalos_tiktok/";
+const FLAG_BASE = "https://flagcdn.com/32x24/";
+
+// Estado
+let pos       = new Array(17).fill(0);
+let boost     = new Array(17).fill(0);
+let laps      = new Array(17).fill(0);
+let likeCount = 0;
+let showingWinner = false;
+
+// mapa tecla → índice
+const keyMap = {};
+COUNTRIES.forEach((c,i) => { keyMap[c.tecla] = i; });
+
+const trackEl   = document.getElementById("track");
+const podiumEl  = document.getElementById("podium");
+const notifEl   = document.getElementById("notif");
+const winOverEl = document.getElementById("winnerOverlay");
+
+// ════════════════════════════════════════════════════════
+//  BUILD PISTAS
+// ════════════════════════════════════════════════════════
+COUNTRIES.forEach((c,i) => {
+  const row = document.createElement("div");
+  row.className = "lane-row";
+
+  // Regalo lateral (fuera del carril)
+  const gSide = document.createElement("img");
+  gSide.src       = GIFT_BASE + c.gift;
+  gSide.alt       = c.name;
+  gSide.className = "gift-side";
+
+  const lane = document.createElement("div");
+  lane.className = "lane";
+
+  // Clip interno para que nada del carril desborde
+  const clip = document.createElement("div");
+  clip.className = "lane-inner-clip";
+
+  const laneTrack = document.createElement("div");
+  laneTrack.className = "lane-track";
+
+  // Nombre del país scrolling, con delay escalonado para que no aparezcan todos a la vez
+  // Cada carril tiene una duración y delay diferentes → intercalados
+  const label = document.createElement("div");
+  label.className   = "country-label";
+  label.textContent = c.name.toUpperCase();
+  const dur   = 10 + (i % 5) * 2;          // 10, 12, 14, 16, 18s — ciclo variado
+  const delay = -(i * (dur / 17));           // offset negativo para que empiecen en distintos puntos
+  label.style.setProperty("--scroll-dur", dur + "s");
+  label.style.animationDelay = delay + "s";
+
+  const fl = document.createElement("img");
+  fl.src    = FLAG_BASE + c.code + ".png";
+  fl.width  = 22; fl.height = 15;
+  fl.className = "lane-flag";
+  fl.alt    = c.name;
+
+  const lapEl = document.createElement("div");
+  lapEl.className = "lap-counter";
+  lapEl.textContent = "";
+
+  const bar = document.createElement("div");
+  bar.className = "progress-bar";
+
+  const horse = document.createElement("img");
+  horse.src       = "https://usagif.com/wp-content/uploads/gifs/gif-horse-107.gif";
+  horse.className = "horse";
+
+  const fin = document.createElement("div");
+  fin.className = "finish-line";
+
+  // El clip contiene las cosas que deben recortarse al borde del carril
+  clip.append(laneTrack, label, fin);
+  // El lane tiene el clip + elementos z-index altos que deben verse
+  lane.append(clip, fl, lapEl, bar, horse);
+  row.append(gSide, lane);
+  trackEl.appendChild(row);
+
+  c.el        = horse;
+  c.lane      = lane;
+  c.bar       = bar;
+  c.trackEl   = laneTrack;
+  c.lapEl     = lapEl;
+  c.glowTimer = null;
+});
+
+// ════════════════════════════════════════════════════════
+//  PODIO
+// ════════════════════════════════════════════════════════
+function buildPodium(){
+  const medals  = ["🥇","🥈","🥉"];
+  const classes = ["p1","p2","p3"];
+  podiumEl.innerHTML = "";
+  // Ordenar por vueltas primero, luego por posición
+  const order = pos.map((p,i)=>({score: laps[i]*WIN_POS + p, i}))
+                    .sort((a,b)=>b.score-a.score);
+  for(let r=0;r<3;r++){
+    const {i} = order[r];
+    const c   = COUNTRIES[i];
+    const pct = Math.min(100, Math.round((pos[i]/WIN_POS)*100));
+
+    const div = document.createElement("div");
+    div.className = "podium-item " + classes[r];
+
+    const top = document.createElement("div");
+    top.className = "podium-top";
+
+    const medal = document.createElement("span");
+    medal.className   = "medal";
+    medal.textContent = medals[r];
+
+    const flag = document.createElement("img");
+    flag.src       = FLAG_BASE + c.code + ".png";
+    flag.className = "podium-flag";
+    flag.width = 22; flag.height = 15;
+    flag.alt   = c.name;
+
+    const pctEl = document.createElement("div");
+    pctEl.className   = "podium-pct";
+    // Si hay vueltas, mostrar vuelta + %
+    pctEl.textContent = laps[i] > 0 ? `V${laps[i]} · ${pct}%` : `${pct}%`;
+
+    top.append(medal, flag);
+    div.append(top, pctEl);
+    podiumEl.appendChild(div);
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  GLOW — usa animaciones CSS (se quitan solas al terminar)
+// ════════════════════════════════════════════════════════
+function applyGlow(i, type){
+  const horse = COUNTRIES[i].el;
+  // Quitar clases para forzar reinicio de animación
+  horse.classList.remove("boost-comment","boost-gift");
+  void horse.offsetWidth; // reflow
+  horse.classList.add(type === "gift" ? "boost-gift" : "boost-comment");
+  // Las animaciones CSS se encargan de apagarse solas (forwards → filter:none)
+}
+
+// ════════════════════════════════════════════════════════
+//  GAME LOOP — juego infinito con vueltas
+// ════════════════════════════════════════════════════════
+setInterval(()=>{
+  COUNTRIES.forEach((c,i)=>{
+    const step = Math.max(MIN_SPD, BASE_SPD + Math.random()*RANDOM_SPD + boost[i]);
+    pos[i] += step;
+
+    // ── NUEVA VUELTA ──
+    if(pos[i] >= WIN_POS){
+      pos[i] -= WIN_POS; // reinicia posición dentro de la pista
+      laps[i]++;
+
+      // Actualiza contador de vueltas al lado de la bandera
+      c.lapEl.textContent  = `×${laps[i]}`;
+      c.lapEl.style.display = "block";
+
+      // Muestra overlay de líder (sin detener el juego)
+      if(!showingWinner){
+        showingWinner = true;
+        document.getElementById("winnerFlag").src = FLAG_BASE + c.code + ".png";
+        document.getElementById("winnerName").textContent = c.name.toUpperCase();
+        document.getElementById("winnerLaps").textContent = `🔄 Vuelta ${laps[i]}`;
+        winOverEl.classList.add("show");
+        // Se cierra automáticamente después de 3s
+        setTimeout(()=>{ winOverEl.classList.remove("show"); showingWinner=false; }, 3000);
+      }
+    }
+
+    boost[i] *= BOOST_DECAY;
+    if(boost[i] < 0.001 && boost[i] > -0.001) boost[i] = 0;
+
+    // Clamp: nunca menos de 0 (se queda en el inicio)
+    if(pos[i] < 0) pos[i] = 0;
+
+    c.el.style.left  = (28 + pos[i]) + "px";
+    c.bar.style.width = ((pos[i]/WIN_POS)*100) + "%";
+
+    // Velocidad líneas del suelo según boost
+    const spd = Math.max(0.25, 1.0 - boost[i]*0.12);
+    c.trackEl.style.animationDuration = spd + "s";
+  });
+
+  buildPodium();
+}, TICK_MS);
+
+// ════════════════════════════════════════════════════════
+//  OBSTÁCULO
+// ════════════════════════════════════════════════════════
+function spawnObstacle(i){
+  const lane = COUNTRIES[i].lane;
+  const o    = document.createElement("div");
+  o.className   = "obstacle";
+  o.style.cssText = "position:absolute;bottom:5px;right:10px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:16px solid #ef4444;z-index:5;filter:drop-shadow(0 0 5px rgba(239,68,68,1));";
+  lane.appendChild(o);
+  let x = 0;
+  let hit = false;
+  const iv = setInterval(()=>{
+    x += 6;
+    o.style.right = (10+x)+"px";
+    const hx = 28+pos[i];
+    const ox = lane.offsetWidth - 10 - x;
+    if(!hit && ox < hx+38 && ox > hx-8){
+      hit = true;
+      pos[i] = Math.max(0, pos[i] - 18);
+      boost[i] = Math.min(boost[i], -0.3);
+      const horse = COUNTRIES[i].el;
+      horse.classList.remove("knocked");
+      void horse.offsetWidth;
+      horse.classList.add("knocked");
+      setTimeout(()=> horse.classList.remove("knocked"), 420);
+    }
+    if(x > 360){ clearInterval(iv); o.remove(); }
+  }, 55);
+}
+
+// ════════════════════════════════════════════════════════
+//  REGALO FLOTANTE (izquierda → derecha, se difumina)
+// ════════════════════════════════════════════════════════
+function spawnGift(i){
+  const lane = COUNTRIES[i].lane;
+  const lx   = Math.min(Math.max(28+pos[i]-6, 28), lane.offsetWidth - 55);
+  const g    = document.createElement("img");
+  g.src      = GIFT_BASE + COUNTRIES[i].gift;
+  g.alt      = COUNTRIES[i].name;
+  g.setAttribute("style",
+    "position:absolute;" +
+    "left:"+lx+"px;" +
+    "bottom:4px;" +
+    "width:28px;height:28px;" +
+    "object-fit:contain;" +
+    "z-index:20;" +
+    "pointer-events:none;" +
+    "animation:giftFly 1.3s ease-out forwards;"
+  );
+  lane.appendChild(g);
+  setTimeout(()=>{ if(g.parentNode) g.remove(); }, 1400);
+}
+
+// ════════════════════════════════════════════════════════
+//  NOTIF
+// ════════════════════════════════════════════════════════
+let notifTimer;
+function showNotif(msg){
+  notifEl.textContent = msg;
+  notifEl.classList.add("show");
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(()=>notifEl.classList.remove("show"), 3000);
+}
+
+function dismissWinner(){
+  winOverEl.classList.remove("show");
+  showingWinner = false;
+}
+
+// ════════════════════════════════════════════════════════
+//  TECLADO
+//  Letra          = comentario (boost leve + glow amarillo)
+//  Shift + Letra  = donación   (boost fuerte + glow rojo)
+//  Ctrl  + Letra  = obstáculo al país
+//  0              = like (acumula, cada 5 = obstáculo aleatorio)
+//  R              = reiniciar vueltas y posiciones
+// ════════════════════════════════════════════════════════
+document.addEventListener("keydown",(e)=>{
+  e.preventDefault();
+
+  if(e.key.toLowerCase() === "r" && !e.ctrlKey && !e.shiftKey){
+    resetRace(); return;
+  }
+
+  const letra = e.key.toLowerCase();
+  const idx   = keyMap[letra];
+
+  if(idx !== undefined){
+    if(e.ctrlKey){
+      // OBSTÁCULO al país
+      boost[idx] += BOOST_OBS_SPAWN;
+      spawnObstacle(idx);
+    } else if(e.shiftKey){
+      // DONACIÓN
+      boost[idx] += BOOST_GIFT;
+      applyGlow(idx, "gift");
+      spawnGift(idx);
+      showNotif("🎁 DONACIÓN → " + COUNTRIES[idx].name + " · +TURBO!");
+    } else {
+      // COMENTARIO
+      boost[idx] += BOOST_COMMENT;
+      applyGlow(idx, "comment");
+    }
+    return;
+  }
+
+  // 0 = like
+  if(e.key === "0"){
+    likeCount++;
+    if(likeCount >= LIKES_FOR_OBS){
+      likeCount = 0;
+      const r = Math.floor(Math.random()*17);
+      boost[r] += BOOST_OBS_SPAWN;
+      spawnObstacle(r);
+    }
+  }
+});
+
+function resetRace(){
+  winOverEl.classList.remove("show");
+  showingWinner = false;
+  pos       = new Array(17).fill(0);
+  boost     = new Array(17).fill(0);
+  laps      = new Array(17).fill(0);
+  likeCount = 0;
+  COUNTRIES.forEach(c=>{
+    c.el.style.left   = "28px";
+    c.bar.style.width = "0%";
+    c.el.classList.remove("boost-comment","boost-gift");
+    c.lapEl.style.display = "none";
+    c.lapEl.textContent   = "";
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  TIKFINITY SSE — conexión al servidor Python
+// ════════════════════════════════════════════════════════
+const sse = new EventSource("http://localhost:3000/stream");
+sse.onopen = () => console.log("✅ Conectado al servidor");
+sse.onerror = () => console.warn("⚠️ Sin conexión al servidor");
+
+sse.onmessage = (evt) => {
+  let data;
+  try{ data = JSON.parse(evt.data); } catch{ return; }
+
+  const tipo    = (data.event || data.type || "").toLowerCase();
+  const comment = (data.comment || data.commandParams || data.message || "").toLowerCase();
+  const giftN   = (data.giftName || "").toLowerCase();
+
+  // ── Comandos internos desde la app Flet ──
+  if(tipo === "__reset__"){
+    resetRace(); return;
+  }
+  if(tipo === "__obstacle__"){
+    const idx = parseInt(data.idx || 0);
+    boost[idx] += BOOST_OBS_SPAWN;
+    spawnObstacle(idx); return;
+  }
+  if(tipo === "__config__"){
+    if(data.BASE_SPD    !== undefined) window.BASE_SPD       = parseFloat(data.BASE_SPD);
+    if(data.BOOST_COMMENT!==undefined) window.BOOST_COMMENT  = parseFloat(data.BOOST_COMMENT);
+    if(data.BOOST_GIFT  !== undefined) window.BOOST_GIFT      = parseFloat(data.BOOST_GIFT);
+    if(data.LIKES_FOR_OBS!==undefined) window.LIKES_FOR_OBS  = parseInt(data.LIKES_FOR_OBS);
+    if(data.BOOST_DECAY !== undefined) window.BOOST_DECAY     = parseFloat(data.BOOST_DECAY);
+    if(data.BG_URL      !== undefined && data.BG_URL.trim()){
+      document.querySelector(".bg").style.backgroundImage = `url("${data.BG_URL.trim()}")`;
+    }
+    console.log("⚙️ Config actualizada:", data);
+    return;
+  }
+
+  // ── Eventos del chat ──
+  if(tipo === "chat" || tipo === "comment"){
+    COUNTRIES.forEach((c,i)=>{
+      if(c.keys.some(k=>comment.includes(k))){
+        boost[i] += BOOST_COMMENT;
+        applyGlow(i,"comment");
+      }
+    });
+  }
+  if(tipo === "like"){
+    likeCount += parseInt(data.likeCount||1);
+    if(likeCount >= LIKES_FOR_OBS){
+      likeCount = 0;
+      const r = Math.floor(Math.random()*17);
+      boost[r] += BOOST_OBS_SPAWN;
+      spawnObstacle(r);
+    }
+  }
+  if(tipo === "gift"){
+    COUNTRIES.forEach((c,i)=>{
+      const giftFile = c.gift.replace(".webp","").toLowerCase();
+      if(giftN.includes(giftFile) || giftN.includes(c.keys[0])){
+        boost[i] += BOOST_GIFT;
+        applyGlow(i,"gift");
+        spawnGift(i);
+        showNotif("🎁 REGALO → "+c.name+" · +TURBO!");
+      }
+    });
+  }
+};
+</script>
+</body>
+</html>
