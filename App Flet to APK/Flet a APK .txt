@@ -1,3 +1,6 @@
+
+
+
 ------------------------------------------------
 
 Instalar SDK Tools sin Android Studio 
