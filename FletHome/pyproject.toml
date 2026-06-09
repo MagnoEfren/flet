@@ -1,0 +1,47 @@
+[project]
+name = "FletHome"
+version = "1.0.0"
+description = "FletHome"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Magno Efren", email = "contacto.magnoefren@gmail.com" }
+]
+
+dependencies = [
+    "flet",
+   
+    "paho-mqtt",
+]
+
+[tool.flet]
+org = "com.fintech"
+product = "FletHome"
+company = "FletHome"
+copyright = "Copyright (C) 2026"
+
+flutter.dependencies = [
+ 
+]
+
+[tool.flet.flutter.pubspec.dependency_overrides]
+webview_flutter_android = "4.10.1"
+
+[tool.flet.app]
+adaptive_icon_foreground = "assets/icon.png"
+path = "."
+
+[tool.poetry.group.dev.dependencies]
+flet = {extras = ["all"], version = "0.85.2"}
+
+[tool.flet.android]
+split_per_abi = true
+
+[tool.flet.android.permission]
+"android.permission.POST_NOTIFICATIONS"         = true
+"android.permission.ACCESS_NOTIFICATION_POLICY" = true
+"android.permission.WAKE_LOCK"                  = true
+"android.permission.FOREGROUND_SERVICE"         = true
+"android.permission.RECEIVE_BOOT_COMPLETED"     = true
+"android.permission.INTERNET"                   = true
+"android.permission.VIBRATE"                    = true
