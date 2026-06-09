@@ -3,14 +3,14 @@
 #include <PubSubClient.h>
 
 // ── WiFi ─────────────────────────────────────────────────────
-const char* WIFI_SSID     = "SEGUNDO";
-const char* WIFI_PASSWORD = "20242024";
+const char* WIFI_SSID     = "XXXXXXXXXXX"; // CAMBIAR 
+const char* WIFI_PASSWORD = "XXXXXXXXXXXXXXXX";  // CAMBIAR  
 
 // ── HiveMQ Cloud ─────────────────────────────────────────────
-const char* MQTT_BROKER   = "5729d5bd97c24fd1b7258d7596b3ce5d.s1.eu.hivemq.cloud";
+const char* MQTT_BROKER   = "XXXXXXXXXXXXXXXXXXXX.s1.eu.hivemq.cloud";  // CAMBIAR 
 const int   MQTT_PORT     = 8883;
-const char* MQTT_USER     = "ESP32";
-const char* MQTT_PASSWORD = "Esp32Prueba";
+const char* MQTT_USER     = "XXXXXXXXX";     // CAMBIAR 
+const char* MQTT_PASSWORD = "XXXXXXXXXXXX";        // CAMBIAR 
 const char* CLIENT_ID     = "esp32-domotica";
 
 // ── 2 Topics ──────────────────────────────────────────────────
