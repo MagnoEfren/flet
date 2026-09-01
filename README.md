@@ -77,12 +77,3 @@ Create a build folder where the app .apk is located there
   
 </div>
 
-## Star History
-
-<a href="https://www.star-history.com/?repos=MagnoEfren%2Fflet&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=MagnoEfren/flet&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=MagnoEfren/flet&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=MagnoEfren/flet&type=date&legend=top-left" />
- </picture>
-</a>
